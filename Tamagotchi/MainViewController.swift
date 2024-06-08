@@ -43,6 +43,9 @@ class MainViewController: UIViewController {
             action: #selector(settingButtonTapped)
         )
         navigationItem.rightBarButtonItem = settingButton
+        
+        // 다음 화면 이동시 현재 화면 타이틀 숨기기
+        navigationItem.backButtonDisplayMode = .minimal
     }
     
     func configureHierarchy() {

@@ -10,8 +10,6 @@ import SnapKit
 
 class TamagotchiCell: UITableViewCell {
     
-    static let identifier = "TamagotchiCell"
-    
     let customView = CustomView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
