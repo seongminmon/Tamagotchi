@@ -35,13 +35,13 @@ class SelectViewController: UIViewController {
             list.append(list.last!)
         }
         
-        configureNavigation()
+        configureNavigationBar()
         configureHierarchy()
         configureLayout()
         configureTableView()
     }
     
-    func configureNavigation() {
+    func configureNavigationBar() {
         navigationItem.title = "다마고치 선택하기"
 //        navigationItem.title = "다마고치 변경하기"
     }
@@ -83,8 +83,15 @@ extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = PopupViewController()
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
+        switch indexPath.row {
+        case 0..<3:
+            let vc = PopupViewController()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.data = list[indexPath.row]
+            present(vc, animated: false)
+        default:
+            break
+        }
     }
+    
 }

@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let nav = UINavigationController(rootViewController: vc)
         window?.rootViewController = nav
         window?.backgroundColor = .backgroundColor
+        window?.tintColor = .fontColor
         window?.makeKeyAndVisible()
     }
 
@@ -48,7 +49,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
+    
 }
-

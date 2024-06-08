@@ -17,6 +17,9 @@
 		2426F5372C12D84F005350A9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2426F5362C12D84F005350A9 /* SnapKit */; };
 		2426F5392C12EE74005350A9 /* TamagotchiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5382C12EE74005350A9 /* TamagotchiCell.swift */; };
 		2426F53B2C13122F005350A9 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F53A2C13122F005350A9 /* PopupViewController.swift */; };
+		2426F53F2C141B3F005350A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F53E2C141B3F005350A9 /* MainViewController.swift */; };
+		2426F5412C141B96005350A9 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5402C141B96005350A9 /* CustomView.swift */; };
+		2426F5432C1449EF005350A9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5422C1449EE005350A9 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		2426F5332C12D49E005350A9 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		2426F5382C12EE74005350A9 /* TamagotchiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiCell.swift; sourceTree = "<group>"; };
 		2426F53A2C13122F005350A9 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		2426F53E2C141B3F005350A9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2426F5402C141B96005350A9 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		2426F5422C1449EE005350A9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +74,12 @@
 				2426F51D2C12BEA4005350A9 /* AppDelegate.swift */,
 				2426F51F2C12BEA4005350A9 /* SceneDelegate.swift */,
 				2426F5332C12D49E005350A9 /* UIColor+.swift */,
+				2426F5402C141B96005350A9 /* CustomView.swift */,
 				2426F5212C12BEA4005350A9 /* SelectViewController.swift */,
 				2426F5382C12EE74005350A9 /* TamagotchiCell.swift */,
 				2426F53A2C13122F005350A9 /* PopupViewController.swift */,
+				2426F53E2C141B3F005350A9 /* MainViewController.swift */,
+				2426F5422C1449EE005350A9 /* SettingViewController.swift */,
 				2426F5262C12BEA6005350A9 /* Assets.xcassets */,
 				2426F5282C12BEA6005350A9 /* LaunchScreen.storyboard */,
 				2426F52B2C12BEA6005350A9 /* Info.plist */,
@@ -155,9 +164,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2426F53F2C141B3F005350A9 /* MainViewController.swift in Sources */,
+				2426F5412C141B96005350A9 /* CustomView.swift in Sources */,
 				2426F5392C12EE74005350A9 /* TamagotchiCell.swift in Sources */,
 				2426F5222C12BEA4005350A9 /* SelectViewController.swift in Sources */,
 				2426F5342C12D49E005350A9 /* UIColor+.swift in Sources */,
+				2426F5432C1449EF005350A9 /* SettingViewController.swift in Sources */,
 				2426F51E2C12BEA4005350A9 /* AppDelegate.swift in Sources */,
 				2426F5202C12BEA4005350A9 /* SceneDelegate.swift in Sources */,
 				2426F53B2C13122F005350A9 /* PopupViewController.swift in Sources */,
