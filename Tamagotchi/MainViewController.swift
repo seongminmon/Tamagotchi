@@ -22,19 +22,33 @@ class MainViewController: UIViewController {
     let separator1 = UIView()
     let separator2 = UIView()
     
-    var data: Tamagotchi?
+    var tamagotchi: Tamagotchi! {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(tamagotchi) {
+                UserDefaults.standard.setValue(encoded, forKey: "tamagotchi")
+            }
+            reloadData()
+        }
+    }
+    
+    var user: User! = User() {
+        didSet {
+            UserDefaults.standard.setValue(user.name, forKey: "username")
+            reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureNavigationBar()
         configureHierarchy()
         configureLayout()
         configureUI()
+        reloadData()
     }
     
     func configureNavigationBar() {
-        navigationItem.title = "대장님의 다마고치"
+        navigationItem.title = "\(user.name)님의 다마고치"
         
         let settingButton = UIBarButtonItem(
             image: UIImage(systemName: "person.circle"),
@@ -131,15 +145,13 @@ class MainViewController: UIViewController {
         bubbleImageView.image = UIImage(named: "bubble")
         bubbleImageView.contentMode = .scaleAspectFill
         
-        bubbleLabel.text = "테이블뷰컨트롤러와 뷰컨트롤러는 어떤 차이가 있을까요?"
         bubbleLabel.font = .boldSystemFont(ofSize: 15)
         bubbleLabel.textColor = .fontColor
         bubbleLabel.textAlignment = .center
         bubbleLabel.numberOfLines = 0
         
-        customView.configureView(data)
+        customView.configureViewWithMain(tamagotchi)
         
-        descriptionLabel.text = "LV1 · 밥알 0개 · 물방울 0개"
         descriptionLabel.font = .boldSystemFont(ofSize: 15)
         descriptionLabel.textColor = .fontColor
         descriptionLabel.textAlignment = .center
@@ -154,7 +166,7 @@ class MainViewController: UIViewController {
         
         waterButton.setTitle("물먹기", for: .normal)
         waterButton.setImage(UIImage(systemName: "leaf.circle"), for: .normal)
-        riceButton.addTarget(self, action: #selector(waterButtonTapped), for: .touchUpInside)
+        waterButton.addTarget(self, action: #selector(waterButtonTapped), for: .touchUpInside)
         configureButton(waterButton)
         
         separator1.backgroundColor = .borderColor
@@ -184,17 +196,63 @@ class MainViewController: UIViewController {
         button.configuration = configuration
     }
     
+    func reloadData() {
+        descriptionLabel.text = "LV\(tamagotchi.level) · 밥알 \(tamagotchi.riceCount)개 · 물방울 \(tamagotchi.waterCount)개"
+        
+        var text = user.message.randomElement()
+        while bubbleLabel.text == text {
+            text = user.message.randomElement()
+        }
+        bubbleLabel.text = text
+        
+        customView.configureViewWithMain(tamagotchi)
+    }
+    
     @objc func settingButtonTapped() {
         let vc = SettingViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func riceButtonTapped() {
-        //
+        let rice = riceTextField.text ?? ""
+        if rice == "" || Int(rice) == nil {
+            tamagotchi.riceCount += 1
+        } else {
+            if Int(rice)! < 100 {
+                tamagotchi.riceCount += Int(rice)!
+            } else {
+                let alert = UIAlertController(
+                    title: "100개 이상은 먹을 수 없어요!",
+                    message: nil,
+                    preferredStyle: .alert
+                )
+                let confirm = UIAlertAction(title: "확인", style: .default)
+                alert.addAction(confirm)
+                present(alert, animated: true)
+            }
+            riceTextField.text = ""
+        }
     }
     
     @objc func waterButtonTapped() {
-        //
+        let water = waterTextField.text ?? ""
+        if water == "" || Int(water) == nil {
+            tamagotchi.waterCount += 1
+        } else {
+            if Int(water)! < 50 {
+                tamagotchi.waterCount += Int(water)!
+            } else {
+                let alert = UIAlertController(
+                    title: "50개 이상은 먹을 수 없어요!",
+                    message: nil,
+                    preferredStyle: .alert
+                )
+                let confirm = UIAlertAction(title: "확인", style: .default)
+                alert.addAction(confirm)
+                present(alert, animated: true)
+            }
+            waterTextField.text = ""
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

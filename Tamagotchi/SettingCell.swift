@@ -16,7 +16,14 @@ class SettingCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        configureLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureLayout() {
         contentView.addSubview(settingImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(nameLabel)
@@ -42,7 +49,6 @@ class SettingCell: UITableViewCell {
         }
         
         titleLabel.font = .boldSystemFont(ofSize: 14)
-        
         nameLabel.font = .systemFont(ofSize: 13)
         nameLabel.textAlignment = .right
     }
@@ -52,9 +58,4 @@ class SettingCell: UITableViewCell {
         titleLabel.text = data.title
         nameLabel.text = data.name
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }

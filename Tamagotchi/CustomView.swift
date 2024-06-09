@@ -13,7 +13,7 @@ class CustomView: UIView {
     let mainImageView = UIImageView()
     let labelContainerView = UIView()
     let nameLabel = UILabel()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
@@ -56,8 +56,13 @@ class CustomView: UIView {
         nameLabel.textAlignment = .center
     }
     
-    func configureView(_ data: Tamagotchi?) {
-        mainImageView.image = data?.image
-        nameLabel.text = data?.name
+    func configureViewWithMain(_ data: Tamagotchi) {
+        mainImageView.image = data.image
+        nameLabel.text = data.name
+    }
+    
+    func configureViewWithSelection(_ data: Tamagotchi) {
+        mainImageView.image = data.firstImage
+        nameLabel.text = data.name
     }
 }

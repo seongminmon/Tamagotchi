@@ -18,8 +18,9 @@ class PopupViewController: UIViewController {
     let cancelButton = UIButton()
     let confirmButton = UIButton()
     
-    var data: Tamagotchi?
-
+    var isSelect: Bool = true
+    var tamagotchi: Tamagotchi?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +36,6 @@ class PopupViewController: UIViewController {
         popupView.addSubview(descriptionLabel)
         popupView.addSubview(cancelButton)
         popupView.addSubview(confirmButton)
-        
         view.addSubview(popupView)
     }
     
@@ -95,27 +95,46 @@ class PopupViewController: UIViewController {
         cancelButton.backgroundColor = .systemGray5
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
-        confirmButton.setTitle("시작하기", for: .normal)
+        confirmButton.setTitle(isSelect ? "시작하기" : "변경하기", for: .normal)
         confirmButton.setTitleColor(.black, for: .normal)
         confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     func configureView() {
-        customView.configureView(data)
-        descriptionLabel.text = "asdfsadfsadf"
+        guard let tamagotchi else { return }
+        customView.configureViewWithSelection(tamagotchi)
+        descriptionLabel.text = tamagotchi.description
     }
     
     @objc func cancelButtonTapped() {
-        dismiss(animated: false)
+        dismiss(animated: true)
     }
     
     @objc func confirmButtonTapped() {
-        print(#function)
+        guard let tamagotchi else { return }
+        
         let vc = MainViewController()
-        vc.data = data
+        if isSelect {
+            // 선택하기면 새로 만들기
+            vc.tamagotchi = tamagotchi
+        } else {
+            if let savedData = UserDefaults.standard.object(forKey: "tamagotchi") as? Data {
+                if var savedTamagotchi = try? JSONDecoder().decode(Tamagotchi.self, from: savedData) {
+                    savedTamagotchi.number = tamagotchi.number
+                    vc.tamagotchi = savedTamagotchi
+                }
+            }
+            if let username = UserDefaults.standard.string(forKey: "username") {
+                vc.user = User(name: username)
+            } else {
+                vc.user = User()
+            }
+        }
+        
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
+        nav.modalTransitionStyle = .crossDissolve
         present(nav, animated: true)
     }
-
+    
 }

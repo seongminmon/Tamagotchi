@@ -23,6 +23,7 @@
 		2426F5452C146FDA005350A9 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5442C146FDA005350A9 /* SettingCell.swift */; };
 		2426F5472C14714A005350A9 /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5462C14714A005350A9 /* ReuseIdentifierProtocol.swift */; };
 		2426F5492C149C25005350A9 /* ChangeNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F5482C149C24005350A9 /* ChangeNameViewController.swift */; };
+		2426F54B2C159522005350A9 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426F54A2C159522005350A9 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		2426F5442C146FDA005350A9 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		2426F5462C14714A005350A9 /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
 		2426F5482C149C24005350A9 /* ChangeNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameViewController.swift; sourceTree = "<group>"; };
+		2426F54A2C159522005350A9 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +81,12 @@
 			children = (
 				2426F51D2C12BEA4005350A9 /* AppDelegate.swift */,
 				2426F51F2C12BEA4005350A9 /* SceneDelegate.swift */,
+				2426F54A2C159522005350A9 /* Models.swift */,
 				2426F5462C14714A005350A9 /* ReuseIdentifierProtocol.swift */,
 				2426F5332C12D49E005350A9 /* UIColor+.swift */,
-				2426F5402C141B96005350A9 /* CustomView.swift */,
 				2426F5212C12BEA4005350A9 /* SelectViewController.swift */,
 				2426F5382C12EE74005350A9 /* TamagotchiCell.swift */,
+				2426F5402C141B96005350A9 /* CustomView.swift */,
 				2426F53A2C13122F005350A9 /* PopupViewController.swift */,
 				2426F53E2C141B3F005350A9 /* MainViewController.swift */,
 				2426F5422C1449EE005350A9 /* SettingViewController.swift */,
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2426F53F2C141B3F005350A9 /* MainViewController.swift in Sources */,
+				2426F54B2C159522005350A9 /* Models.swift in Sources */,
 				2426F5412C141B96005350A9 /* CustomView.swift in Sources */,
 				2426F5392C12EE74005350A9 /* TamagotchiCell.swift in Sources */,
 				2426F5492C149C25005350A9 /* ChangeNameViewController.swift in Sources */,

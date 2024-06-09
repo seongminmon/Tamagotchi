@@ -8,25 +8,19 @@
 import UIKit
 import SnapKit
 
-struct Tamagotchi {
-    let name: String
-    let imageName: String
-    
-    var image: UIImage? {
-        return UIImage(named: imageName)
-    }
-}
-
 class SelectViewController: UIViewController {
     
     let tableView = UITableView()
     
     var list: [Tamagotchi] = [
-        Tamagotchi(name: "따끔따끔 다마고치", imageName: "1-6"),
-        Tamagotchi(name: "방실방실 다마고치", imageName: "2-6"),
-        Tamagotchi(name: "반짝반짝 다마고치", imageName: "3-6"),
-        Tamagotchi(name: "준비중이에요", imageName: "noImage"),
+        Tamagotchi(number: 1),
+        Tamagotchi(number: 2),
+        Tamagotchi(number: 3),
+        Tamagotchi(number: 0),
     ]
+    
+    // 선택화면인지 변경화면인지
+    var isSelect: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +36,7 @@ class SelectViewController: UIViewController {
     }
     
     func configureNavigationBar() {
-        navigationItem.title = "다마고치 선택하기"
-//        navigationItem.title = "다마고치 변경하기"
+        navigationItem.title = isSelect ? "다마고치 선택하기" : "다마고치 변경하기"
     }
     
     func configureHierarchy() {
@@ -85,10 +78,14 @@ extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0..<3:
+            // 팝업 띄우기
             let vc = PopupViewController()
             vc.modalPresentationStyle = .overFullScreen
-            vc.data = list[indexPath.row]
-            present(vc, animated: false)
+            vc.modalTransitionStyle = .crossDissolve
+            let data = list[indexPath.row]
+            vc.tamagotchi = data
+            vc.isSelect = isSelect
+            present(vc, animated: true)
         default:
             break
         }

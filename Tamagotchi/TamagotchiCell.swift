@@ -15,14 +15,14 @@ class TamagotchiCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .backgroundColor
-        
         contentView.addSubview(customView)
         
         customView.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview().inset(8)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
+        
+        contentView.backgroundColor = .backgroundColor
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +30,6 @@ class TamagotchiCell: UITableViewCell {
     }
     
     func configureCell(_ data: Tamagotchi) {
-        customView.configureView(data)
+        customView.configureViewWithSelection(data)
     }
 }
