@@ -8,18 +8,17 @@
 import UIKit
 import SnapKit
 
-class TamagotchiCell: UITableViewCell {
+class TamagotchiCell: UICollectionViewCell {
     
     let customView = CustomView()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         contentView.addSubview(customView)
         
         customView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview().inset(8)
-            make.horizontalEdges.equalToSuperview().inset(16)
+            make.edges.equalToSuperview()
         }
         
         contentView.backgroundColor = .backgroundColor

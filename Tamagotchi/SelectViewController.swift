@@ -10,7 +10,18 @@ import SnapKit
 
 class SelectViewController: UIViewController {
     
-    let tableView = UITableView()
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+    
+    func collectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = (UIScreen.main.bounds.width - 40)
+        layout.itemSize = CGSize(width: width / 3, height: width / 3)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return layout
+    }
     
     var list: [Tamagotchi] = [
         Tamagotchi(number: 1),
@@ -32,7 +43,7 @@ class SelectViewController: UIViewController {
         configureNavigationBar()
         configureHierarchy()
         configureLayout()
-        configureTableView()
+        configureCollectionView()
     }
     
     func configureNavigationBar() {
@@ -40,49 +51,48 @@ class SelectViewController: UIViewController {
     }
     
     func configureHierarchy() {
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
     }
     
     func configureLayout() {
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    func configureTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+    func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        tableView.rowHeight = 180
-        tableView.backgroundColor = .backgroundColor
+        collectionView.backgroundColor = .backgroundColor
         
-        tableView.register(TamagotchiCell.self, forCellReuseIdentifier: TamagotchiCell.identifier)
+        collectionView.register(TamagotchiCell.self, forCellWithReuseIdentifier: TamagotchiCell.identifier)
     }
-
 }
 
-extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SelectViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TamagotchiCell.identifier, for: indexPath) as! TamagotchiCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TamagotchiCell.identifier, for: indexPath) as! TamagotchiCell
         
-        let data = list[indexPath.row]
+        let data = list[indexPath.item]
         cell.configureCell(data)
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.item {
         case 0..<3:
             // 팝업 띄우기
             let vc = PopupViewController()
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
-            let data = list[indexPath.row]
+            let data = list[indexPath.item]
             vc.tamagotchi = data
             vc.isSelect = isSelect
             present(vc, animated: true)
@@ -90,5 +100,4 @@ extension SelectViewController: UITableViewDelegate, UITableViewDataSource {
             break
         }
     }
-    
 }

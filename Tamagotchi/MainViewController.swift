@@ -47,6 +47,16 @@ class MainViewController: UIViewController {
         reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let username = UserDefaults.standard.string(forKey: "username") {
+            user = User(name: username)
+        } else {
+            user = User()
+        }
+        navigationItem.title = "\(user.name)님의 다마고치"
+    }
+    
     func configureNavigationBar() {
         navigationItem.title = "\(user.name)님의 다마고치"
         

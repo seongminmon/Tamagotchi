@@ -56,6 +56,5 @@ class SettingCell: UITableViewCell {
     func configureCell(_ data: Setting) {
         settingImageView.image = data.image
         titleLabel.text = data.title
-        nameLabel.text = data.name
     }
 }

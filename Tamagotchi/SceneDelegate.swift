@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let savedData = UserDefaults.standard.object(forKey: "tamagotchi") as? Data {
             if let savedTamagotchi = try? JSONDecoder().decode(Tamagotchi.self, from: savedData) {
                 // 선택된 다마고치가 있을 때 -> 메인화면
-                
                 let vc = MainViewController()
                 vc.tamagotchi = savedTamagotchi
                 if let username = UserDefaults.standard.string(forKey: "username") {

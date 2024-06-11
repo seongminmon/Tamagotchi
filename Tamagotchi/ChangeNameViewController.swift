@@ -24,7 +24,6 @@ class ChangeNameViewController: UIViewController {
     }
     
     func configureNavigationBar() {
-        
         navigationItem.title = "\(username)님 이름 정하기"
         
         let saveButton = UIBarButtonItem(

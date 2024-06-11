@@ -10,7 +10,6 @@ import UIKit
 struct Setting {
     let imageName: String
     let title: String
-    let name: String
     
     var image: UIImage? {
         return UIImage(systemName: imageName)
@@ -21,12 +20,12 @@ class SettingViewController: UIViewController {
     
     let tableView = UITableView()
     
-    var username = UserDefaults.standard.string(forKey: "username") ?? "유저"
+    var username: String = ""
     
     lazy var list: [Setting] = [
-        Setting(imageName: "pencil", title: "내 이름 설정하기", name: username),
-        Setting(imageName: "moon.fill", title: "다마고치 변경하기", name: ""),
-        Setting(imageName: "arrow.clockwise", title: "데이터 초기화", name: "")
+        Setting(imageName: "pencil", title: "내 이름 설정하기"),
+        Setting(imageName: "moon.fill", title: "다마고치 변경하기"),
+        Setting(imageName: "arrow.clockwise", title: "데이터 초기화")
     ]
     
     override func viewDidLoad() {
@@ -42,7 +41,7 @@ class SettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(#function)
+        username = UserDefaults.standard.string(forKey: "username") ?? "유저"
         tableView.reloadData()
     }
     
@@ -82,6 +81,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         
         let data = list[indexPath.row]
         cell.configureCell(data)
+        if indexPath.row == 0 {
+            cell.nameLabel.text = username
+        } else {
+            cell.nameLabel.text = ""
+        }
         cell.accessoryType = .disclosureIndicator
         
         return cell
