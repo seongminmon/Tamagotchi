@@ -1,5 +1,5 @@
 //
-//  TamagotchiCell.swift
+//  SelectCollectionViewCell.swift
 //  Tamagotchi
 //
 //  Created by 김성민 on 6/7/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TamagotchiCell: UICollectionViewCell {
+class SelectCollectionViewCell: UICollectionViewCell {
     
     let customView = CustomView()
     
