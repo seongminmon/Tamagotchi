@@ -12,17 +12,6 @@ class SelectViewController: UIViewController {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
-    func collectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let width = (UIScreen.main.bounds.width - 40)
-        layout.itemSize = CGSize(width: width / 3, height: width / 3)
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        return layout
-    }
-    
     var list: [Tamagotchi] = [
         Tamagotchi(number: 1),
         Tamagotchi(number: 2),
@@ -30,8 +19,8 @@ class SelectViewController: UIViewController {
         Tamagotchi(number: 0),
     ]
     
-    // 선택화면인지 변경화면인지
-    var isSelect: Bool = true
+    // 선택 화면인지 변경 화면인지
+    var isSelect: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +47,17 @@ class SelectViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    func collectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = (UIScreen.main.bounds.width - 40)
+        layout.itemSize = CGSize(width: width / 3, height: width / 3)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return layout
     }
     
     func configureCollectionView() {

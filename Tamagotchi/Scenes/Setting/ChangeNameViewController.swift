@@ -12,8 +12,6 @@ class ChangeNameViewController: UIViewController {
     
     let userTextField = UITextField()
     let borderView = UIView()
-    
-    let username = UserDefaults.standard.string(forKey: "username") ?? "유저"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +22,7 @@ class ChangeNameViewController: UIViewController {
     }
     
     func configureNavigationBar() {
-        navigationItem.title = "\(username)님 이름 정하기"
+        navigationItem.title = "\(UserDefaultsManager.user?.name ?? "유저")님 이름 정하기"
         
         let saveButton = UIBarButtonItem(
             title: "저장",
@@ -56,7 +54,7 @@ class ChangeNameViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .backgroundColor
         
-        userTextField.text = username == "유저" ? "" : username
+        userTextField.text = UserDefaultsManager.user?.name ?? "유저"
         userTextField.placeholder = "닉네임을 입력해주세요"
         userTextField.textColor = .fontColor
         userTextField.tintColor = .fontColor
@@ -65,9 +63,11 @@ class ChangeNameViewController: UIViewController {
     }
     
     @objc func saveButtonTapped() {
-        // 유저 이름 저장하기
-        UserDefaults.standard.setValue(userTextField.text, forKey: "username")
-        // 이전 화면으로 돌아가기
-        navigationController?.popViewController(animated: true)
+        if let name = userTextField.text, name != "" {
+            // 유저 이름 저장하기
+            UserDefaultsManager.user = User(name: name)
+            // 이전 화면으로 돌아가기
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

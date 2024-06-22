@@ -18,8 +18,9 @@ class PopupViewController: UIViewController {
     let cancelButton = UIButton()
     let confirmButton = UIButton()
     
+    // 선택하기인지 변경하기인지
     var isSelect: Bool = true
-    var tamagotchi: Tamagotchi?
+    var tamagotchi: Tamagotchi!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,34 +104,26 @@ class PopupViewController: UIViewController {
     func configureView() {
         guard let tamagotchi else { return }
         customView.configureViewWithSelection(tamagotchi)
-        descriptionLabel.text = tamagotchi.description
+        descriptionLabel.text = tamagotchi.introduce
     }
     
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
     }
     
+    // MARK: - UD에 저장할 타이밍 (확인 버튼을 눌렀을 때)
     @objc func confirmButtonTapped() {
         guard let tamagotchi else { return }
         
-        let vc = MainViewController()
         if isSelect {
             // 선택하기면 새로 만들기
-            vc.tamagotchi = tamagotchi
+            UserDefaultsManager.tamagotchi = tamagotchi
         } else {
-            if let savedData = UserDefaults.standard.object(forKey: "tamagotchi") as? Data {
-                if var savedTamagotchi = try? JSONDecoder().decode(Tamagotchi.self, from: savedData) {
-                    savedTamagotchi.number = tamagotchi.number
-                    vc.tamagotchi = savedTamagotchi
-                }
-            }
-            if let username = UserDefaults.standard.string(forKey: "username") {
-                vc.user = User(name: username)
-            } else {
-                vc.user = User()
-            }
+            // 변경하기면 number만 바꾸기
+            UserDefaultsManager.tamagotchi?.number = tamagotchi.number
         }
         
+        let vc = MainViewController()
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         nav.modalTransitionStyle = .crossDissolve

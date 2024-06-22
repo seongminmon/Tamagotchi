@@ -20,7 +20,7 @@ class SettingViewController: UIViewController {
     
     let tableView = UITableView()
     
-    var username: String = ""
+    var user: User?
     
     lazy var list: [Setting] = [
         Setting(imageName: "pencil", title: "내 이름 설정하기"),
@@ -41,7 +41,7 @@ class SettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        username = UserDefaults.standard.string(forKey: "username") ?? "유저"
+        user = UserDefaultsManager.user
         tableView.reloadData()
     }
     
@@ -82,7 +82,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         let data = list[indexPath.row]
         cell.configureCell(data)
         if indexPath.row == 0 {
-            cell.nameLabel.text = username
+            cell.nameLabel.text = user?.name
         } else {
             cell.nameLabel.text = ""
         }
@@ -111,16 +111,17 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             
             let confirm = UIAlertAction(title: "웅", style: .default) { _ in
                 // 데이터 초기화
-                let dictionary = UserDefaults.standard.dictionaryRepresentation()
-                dictionary.keys.forEach { key in
-                    UserDefaults.standard.removeObject(forKey: key)
-                }
-                // 선택 화면으로 이동
+                UserDefaultsManager.removeAll()
+                
+                // 선택 화면으로 윈도우 교체
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
                 let vc = SelectViewController()
+                vc.isSelect = true
                 let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                nav.modalTransitionStyle = .crossDissolve
-                self.present(nav, animated: true)
+                sceneDelegate?.window?.rootViewController = nav
+                sceneDelegate?.window?.makeKeyAndVisible()
             }
             let cancel = UIAlertAction(title: "아냐!", style: .cancel)
             

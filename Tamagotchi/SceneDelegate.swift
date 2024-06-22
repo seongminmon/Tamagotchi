@@ -16,28 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         // 분기 처리
-        if let savedData = UserDefaults.standard.object(forKey: "tamagotchi") as? Data {
-            if let savedTamagotchi = try? JSONDecoder().decode(Tamagotchi.self, from: savedData) {
-                // 선택된 다마고치가 있을 때 -> 메인화면
-                let vc = MainViewController()
-                vc.tamagotchi = savedTamagotchi
-                if let username = UserDefaults.standard.string(forKey: "username") {
-                    vc.user = User(name: username)
-                } else {
-                    vc.user = User()
-                }
-                
-                let nav = UINavigationController(rootViewController: vc)
-                window?.rootViewController = nav
-            } else {
-                // 선택된 다마고치가 없을 때 -> 선택화면
-                let vc = SelectViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                window?.rootViewController = nav
-            }
+        // 선택한 다마고치와 유저 정보가 존재할 때
+        if let tamagotchi = UserDefaultsManager.tamagotchi,
+           let user = UserDefaultsManager.user {
+            // 메인 화면
+            let vc = MainViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            window?.rootViewController = nav
         } else {
-            // 선택된 다마고치가 없을 때 -> 선택화면
+            // 선택 화면
             let vc = SelectViewController()
+            vc.isSelect = true
             let nav = UINavigationController(rootViewController: vc)
             window?.rootViewController = nav
         }

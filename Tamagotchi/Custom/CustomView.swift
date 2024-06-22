@@ -56,13 +56,13 @@ class CustomView: UIView {
         nameLabel.textAlignment = .center
     }
     
-    func configureViewWithMain(_ data: Tamagotchi) {
-        mainImageView.image = data.image
-        nameLabel.text = data.name
+    func configureViewWithMain(_ data: Tamagotchi?) {
+        mainImageView.image = data?.image
+        nameLabel.text = data?.name
     }
     
-    func configureViewWithSelection(_ data: Tamagotchi) {
-        mainImageView.image = data.firstImage
-        nameLabel.text = data.name
+    func configureViewWithSelection(_ data: Tamagotchi?) {
+        mainImageView.image = data?.firstImage
+        nameLabel.text = data?.name
     }
 }

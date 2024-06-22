@@ -50,7 +50,7 @@ struct Tamagotchi: Codable {
         }
     }
     
-    var description: String {
+    var introduce: String {
         switch number {
         case 1:
             return """
@@ -77,6 +77,10 @@ struct Tamagotchi: Codable {
         default:
             return ""
         }
+    }
+    
+    var description: String {
+        return "LV\(level) · 밥알 \(riceCount)개 · 물방울 \(waterCount)개"
     }
     
 }

@@ -22,22 +22,6 @@ class MainViewController: UIViewController {
     let separator1 = UIView()
     let separator2 = UIView()
     
-    var tamagotchi: Tamagotchi! {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(tamagotchi) {
-                UserDefaults.standard.setValue(encoded, forKey: "tamagotchi")
-            }
-            reloadData()
-        }
-    }
-    
-    var user: User! = User() {
-        didSet {
-            UserDefaults.standard.setValue(user.name, forKey: "username")
-            reloadData()
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
@@ -49,16 +33,12 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let username = UserDefaults.standard.string(forKey: "username") {
-            user = User(name: username)
-        } else {
-            user = User()
-        }
-        navigationItem.title = "\(user.name)님의 다마고치"
+        navigationItem.title = "\(UserDefaultsManager.user?.name ?? "유저")님의 다마고치"
+        reloadData()
     }
     
     func configureNavigationBar() {
-        navigationItem.title = "\(user.name)님의 다마고치"
+        navigationItem.title = "\(UserDefaultsManager.user?.name ?? "유저")님의 다마고치"
         
         let settingButton = UIBarButtonItem(
             image: UIImage(systemName: "person.circle"),
@@ -70,6 +50,11 @@ class MainViewController: UIViewController {
         
         // 다음 화면 이동시 현재 화면 타이틀 숨기기
         navigationItem.backButtonDisplayMode = .minimal
+    }
+    
+    @objc func settingButtonTapped() {
+        let vc = SettingViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureHierarchy() {
@@ -160,8 +145,6 @@ class MainViewController: UIViewController {
         bubbleLabel.textAlignment = .center
         bubbleLabel.numberOfLines = 0
         
-        customView.configureViewWithMain(tamagotchi)
-        
         descriptionLabel.font = .boldSystemFont(ofSize: 15)
         descriptionLabel.textColor = .fontColor
         descriptionLabel.textAlignment = .center
@@ -202,34 +185,25 @@ class MainViewController: UIViewController {
         configuration.titlePadding = 8
         configuration.imagePadding = 8
         configuration.imagePlacement = .leading
-        
         button.configuration = configuration
     }
     
     func reloadData() {
-        descriptionLabel.text = "LV\(tamagotchi.level) · 밥알 \(tamagotchi.riceCount)개 · 물방울 \(tamagotchi.waterCount)개"
-        
-        var text = user.message.randomElement()
-        while bubbleLabel.text == text {
-            text = user.message.randomElement()
+        var bubbleText = UserDefaultsManager.user?.message.randomElement()
+        while bubbleLabel.text == bubbleText {
+            bubbleText = UserDefaultsManager.user?.message.randomElement()
         }
-        bubbleLabel.text = text
-        
-        customView.configureViewWithMain(tamagotchi)
-    }
-    
-    @objc func settingButtonTapped() {
-        let vc = SettingViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        bubbleLabel.text = bubbleText
+        customView.configureViewWithMain(UserDefaultsManager.tamagotchi)
+        descriptionLabel.text = UserDefaultsManager.tamagotchi?.description
     }
     
     @objc func riceButtonTapped() {
-        let rice = riceTextField.text ?? ""
-        if rice == "" || Int(rice) == nil {
-            tamagotchi.riceCount += 1
-        } else {
-            if Int(rice)! < 100 {
-                tamagotchi.riceCount += Int(rice)!
+        // 데이터 변경
+        let riceString = riceTextField.text ?? ""
+        if let riceCnt = Int(riceString) {
+            if riceCnt < 100 {
+                UserDefaultsManager.tamagotchi?.riceCount += riceCnt
             } else {
                 let alert = UIAlertController(
                     title: "100개 이상은 먹을 수 없어요!",
@@ -240,17 +214,21 @@ class MainViewController: UIViewController {
                 alert.addAction(confirm)
                 present(alert, animated: true)
             }
-            riceTextField.text = ""
+        } else {
+            UserDefaultsManager.tamagotchi?.riceCount += 1
         }
+        riceTextField.text = ""
+        
+        // 뷰에 적용
+        reloadData()
     }
     
     @objc func waterButtonTapped() {
-        let water = waterTextField.text ?? ""
-        if water == "" || Int(water) == nil {
-            tamagotchi.waterCount += 1
-        } else {
-            if Int(water)! < 50 {
-                tamagotchi.waterCount += Int(water)!
+        // 데이터 변경
+        let waterString = waterTextField.text ?? ""
+        if let waterCnt = Int(waterString) {
+            if waterCnt < 50 {
+                UserDefaultsManager.tamagotchi?.waterCount += waterCnt
             } else {
                 let alert = UIAlertController(
                     title: "50개 이상은 먹을 수 없어요!",
@@ -261,8 +239,13 @@ class MainViewController: UIViewController {
                 alert.addAction(confirm)
                 present(alert, animated: true)
             }
-            waterTextField.text = ""
+        } else {
+            UserDefaultsManager.tamagotchi?.waterCount += 1
         }
+        waterTextField.text = ""
+        
+        // 뷰에 적용
+        reloadData()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
